@@ -5,10 +5,10 @@ import android.widget.RelativeLayout.LayoutParams;
 public  class RatioFixer {
 	
 
-//	final static int VIRTUALWIDTH =768;
-//	final static int VIRTUALHEIGHT = 1230;
-	final static int VIRTUALWIDTH =1230;
-	final static int VIRTUALHEIGHT = 768;
+	final static int VIRTUALWIDTH =768;
+	final static int VIRTUALHEIGHT = 1230;
+//	final static int VIRTUALWIDTH =1230;
+//	final static int VIRTUALHEIGHT = 768;
 	private static RatioFixer mInstance = new RatioFixer();
 	
 	 float ratio;

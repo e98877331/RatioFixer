@@ -35,16 +35,14 @@ public class RatioRelativeLayout extends RelativeLayout{
 		rootView.setBackgroundColor(Color.BLACK);
 		
 		
-	    //int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-	    int widthSize = MeasureSpec.getSize(widthMeasureSpec);      
-	    //int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-	    int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+//	    int widthSize = MeasureSpec.getSize(widthMeasureSpec);      
+//	    int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 	    
-	    RatioFixer.initialize(widthSize, heightSize);
+	    //RatioFixer.initialize(widthSize, heightSize);
 	    
 	  
-	    int x  = RatioFixer.getRealWidth();
-	    int y = RatioFixer.getRealHeight();
+//	    int x  = RatioFixer.getRealWidth();
+//	    int y = RatioFixer.getRealHeight();
 	    setMeasuredDimension(RatioFixer.getRealWidth(), RatioFixer.getRealHeight());
 	}
 	
