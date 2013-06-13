@@ -3,7 +3,6 @@ package wcm.ytwhyc.ratiofixer;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.widget.RelativeLayout;
 
 public class RatioRelativeLayout extends RelativeLayout {

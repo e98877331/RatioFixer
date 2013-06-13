@@ -6,12 +6,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout.LayoutParams;
 
 public class RatioActivity extends Activity {
 
-	RatioRelativeLayout ratioLayout;
+	RatioRelativeLayout mRatioLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,8 @@ public class RatioActivity extends Activity {
 
 		RatioFixer.initialize(x, y - statusBarHeight);
 
-		ratioLayout = new RatioRelativeLayout(this);
-		ratioLayout.post(new Runnable() {
+		mRatioLayout = new RatioRelativeLayout(this);
+		mRatioLayout.post(new Runnable() {
 
 			@Override
 			public void run() {
@@ -49,26 +50,17 @@ public class RatioActivity extends Activity {
 				onLayoutCreated();
 			}
 		});
-		ratioLayout.setBackgroundColor(Color.GRAY);
+		mRatioLayout.setBackgroundColor(Color.GRAY);
 
 		LayoutParams layoutParams = new LayoutParams(
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT);
 		layoutParams.gravity = Gravity.CENTER;
-		setContentView(ratioLayout, layoutParams);
+		setContentView(mRatioLayout, layoutParams);
 //		getWindow().getDecorView().findViewById(android.R.id.content)
 //				.setBackgroundColor(Color.RED);
 	}
 
-	public int getStatusBarHeight() {
-		int result = 0;
-		int resourceId = getResources().getIdentifier("status_bar_height",
-				"dimen", "android");
-		if (resourceId > 0) {
-			result = getResources().getDimensionPixelSize(resourceId);
-		}
-		return result;
-	}
 
 	
 	public void onInitialize()
@@ -80,8 +72,22 @@ public class RatioActivity extends Activity {
 
 	}
 	
+	public int getStatusBarHeight() {
+		int result = 0;
+		int resourceId = getResources().getIdentifier("status_bar_height",
+				"dimen", "android");
+		if (resourceId > 0) {
+			result = getResources().getDimensionPixelSize(resourceId);
+		}
+		return result;
+	}
 	public RatioRelativeLayout getMainLayout() {
-		return ratioLayout;
+		return mRatioLayout;
+	}
+	
+	public void addView(View v,int width,int height,int x,int y)
+	{
+		mRatioLayout.addView(v,RatioFixer.getLayoutParam(width, height, x, y));
 	}
 
 }
