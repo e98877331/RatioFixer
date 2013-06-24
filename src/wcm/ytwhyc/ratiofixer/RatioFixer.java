@@ -4,30 +4,30 @@ import android.widget.RelativeLayout.LayoutParams;
 
 public class RatioFixer {
 
-	static int VIRTUALWIDTH = 768;
-	static int VIRTUALHEIGHT = 1230;
+	 int VIRTUALWIDTH = 768;
+	 int VIRTUALHEIGHT = 1230;
 	// final static int VIRTUALWIDTH =1230;
 	// final static int VIRTUALHEIGHT = 768;
-	private static RatioFixer mInstance = new RatioFixer();
+	
 
 	float ratio;
 
 	int realWidth;
 	int realHeight;
 
-	private RatioFixer() {
+	public RatioFixer() {
 
 	}
 
-	public static LayoutParams getLayoutParam(int width, int height, int x,
+	public  LayoutParams getLayoutParam(int width, int height, int x,
 			int y) {
-		LayoutParams rp = new LayoutParams(getValue(width), getValue(height));
-		rp.leftMargin = getValue(x);
-		rp.topMargin = getValue(y);
+		LayoutParams rp = new LayoutParams(getRealValue(width), getRealValue(height));
+		rp.leftMargin = getRealValue(x);
+		rp.topMargin = getRealValue(y);
 		return rp;
 	}
 
-	public static void initialize(int pw, int ph) {
+	public  void initialize(int pw, int ph) {
 		float aspect = (float) VIRTUALHEIGHT / VIRTUALWIDTH;
 		float realRatio = (float) ph / pw;
 		// mInstance.ratio = VIRTUALHEIGHT/ VIRTUALWIDTH;
@@ -36,40 +36,38 @@ public class RatioFixer {
 		// mInstance.realHeight = (int)(VIRTUALHEIGHT *mInstance.ratio);
 
 		if (realRatio < aspect) {
-			mInstance.realHeight = ph;
-			mInstance.realWidth = (int) (mInstance.realHeight / aspect);
+			realHeight = ph;
+			realWidth = (int) (realHeight / aspect);
 
 		} else {
-			mInstance.realWidth = pw;
-			mInstance.realHeight = (int) (mInstance.realWidth * aspect);
+			realWidth = pw;
+			realHeight = (int) (realWidth * aspect);
 		}
 
-		mInstance.ratio = (float) mInstance.realWidth / VIRTUALWIDTH;
+		ratio = (float)realWidth / VIRTUALWIDTH;
 	}
 
-	public static float getRatio() {
-		return mInstance.ratio;
+	public  float getRatio() {
+		return ratio;
 	}
 
-	public static int getValue(int p) {
-		return (int) (p * mInstance.ratio);
+	public  int getRealValue(int p) {
+		return (int) (p * ratio);
 	}
 
-	public static void setVirtualSize(int vWidth, int vHeight) {
+	public  void setVirtualSize(int vWidth, int vHeight) {
 		VIRTUALWIDTH = vWidth;
 		VIRTUALHEIGHT = vHeight;
 	}
 
-	public static int getRealWidth() {
-		return mInstance.realWidth;
+	public  int getRealWidth() {
+		return realWidth;
 
 	}
 
-	public static int getRealHeight() {
-		return mInstance.realHeight;
+	public  int getRealHeight() {
+		return realHeight;
 	}
 
-	public RatioFixer getInstance() {
-		return mInstance;
-	}
+
 }

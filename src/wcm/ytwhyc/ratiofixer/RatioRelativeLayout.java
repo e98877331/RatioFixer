@@ -7,6 +7,8 @@ import android.widget.RelativeLayout;
 
 public class RatioRelativeLayout extends RelativeLayout {
 
+	private RatioActivity mContext;  
+	
 	public RatioRelativeLayout(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -17,6 +19,7 @@ public class RatioRelativeLayout extends RelativeLayout {
 		// display.getSize(size);
 		//
 		// RatioFixer.initialize(size.x, size.y);
+		mContext = (RatioActivity)context;
 
 	}
 
@@ -35,8 +38,9 @@ public class RatioRelativeLayout extends RelativeLayout {
 
 		// int x = RatioFixer.getRealWidth();
 		// int y = RatioFixer.getRealHeight();
-		setMeasuredDimension(RatioFixer.getRealWidth(),
-				RatioFixer.getRealHeight());
+		RatioFixer rf = mContext.getRatioFixer();
+		setMeasuredDimension(rf.getRealWidth(),
+				rf.getRealHeight());
 	}
 
 	// protected void onLayout (boolean changed, int left, int top, int right,

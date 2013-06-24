@@ -12,13 +12,16 @@ import android.widget.FrameLayout.LayoutParams;
 
 public class RatioActivity extends Activity {
 
-	RatioRelativeLayout mRatioLayout;
+	private RatioRelativeLayout mRatioLayout;
+	
+	private RatioFixer mRatioFixer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
+		this.getActionBar().hide();
+        mRatioFixer = new RatioFixer();
 		onInitialize();
 		
 		int x, y;
@@ -39,7 +42,7 @@ public class RatioActivity extends Activity {
 
 		int statusBarHeight = getStatusBarHeight();
 
-		RatioFixer.initialize(x, y - statusBarHeight);
+		mRatioFixer.initialize(x, y - statusBarHeight);
 
 		mRatioLayout = new RatioRelativeLayout(this);
 		mRatioLayout.post(new Runnable() {
@@ -68,6 +71,11 @@ public class RatioActivity extends Activity {
 		
 	}
 	
+	
+	
+	/*
+	 * This function will invoke after the layout is drawn
+	 */
 	public void onLayoutCreated() {
 
 	}
@@ -87,7 +95,16 @@ public class RatioActivity extends Activity {
 	
 	public void addView(View v,int width,int height,int x,int y)
 	{
-		mRatioLayout.addView(v,RatioFixer.getLayoutParam(width, height, x, y));
+		mRatioLayout.addView(v,mRatioFixer.getLayoutParam(width, height, x, y));
 	}
 
+	public int getRealValue(int v)
+	{
+		return mRatioFixer.getRealValue(v);
+	}
+	
+	public RatioFixer getRatioFixer()
+	{
+		return mRatioFixer;
+	}
 }
