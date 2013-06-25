@@ -53,7 +53,7 @@ public class RatioActivity extends Activity {
 				onLayoutCreated();
 			}
 		});
-		mRatioLayout.setBackgroundColor(Color.GRAY);
+		mRatioLayout.setBackgroundColor(Color.WHITE);
 
 		LayoutParams layoutParams = new LayoutParams(
 				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
@@ -64,8 +64,9 @@ public class RatioActivity extends Activity {
 //				.setBackgroundColor(Color.RED);
 	}
 
-
-	
+/*
+ * Initialize function, executes before RatioFixer initialize. Set virtual size or default virtual size here 
+ */
 	public void onInitialize()
 	{
 		
@@ -106,5 +107,15 @@ public class RatioActivity extends Activity {
 	public RatioFixer getRatioFixer()
 	{
 		return mRatioFixer;
+	}
+	
+	public void setVirtualSize(int width, int height)
+	{
+		mRatioFixer.setVirtualSize(width, height);
+	}
+	
+	public void setDefaultVirtualSize(int width,int height)
+	{
+		RatioFixer.setDefaultVirtualSize(width, height);
 	}
 }
