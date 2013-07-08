@@ -101,13 +101,15 @@ public class RatioActivity extends Activity {
 		return mRatioFixer;
 	}
 	
-//	public void setVirtualSize(int width, int height)
-//	{
-//		mRatioFixer.setVirtualSize(width, height);
-//	}
-//	
-//	public void setDefaultVirtualSize(int width,int height)
-//	{
-//		RatioFixer.setDefaultVirtualSize(width, height);
-//	}
+	public void setVirtualSize(int width, int height)
+	{
+	//	mRatioFixer.setVirtualSize(width, height);
+		mVWidth = width;
+		mVHeight = height;
+	}
+	
+	public void setDefaultVirtualSize(int width,int height)
+	{
+		RatioFixer.setDefaultVirtualSize(width, height);
+	}
 }
