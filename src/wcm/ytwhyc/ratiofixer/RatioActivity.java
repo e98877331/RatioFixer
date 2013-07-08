@@ -15,19 +15,20 @@ public class RatioActivity extends Activity {
 	private RatioRelativeLayout mRatioLayout;
 	
 	private RatioFixer mRatioFixer;
+	
+	public int mVWidth = 0, mVHeight =0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		this.getActionBar().hide();
-        mRatioFixer = new RatioFixer();
 		onInitialize();
 		
-		int x, y;
-		WindowManager wm = (WindowManager) this
-				.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
+//		int x, y;
+//		WindowManager wm = (WindowManager) this
+//				.getSystemService(Context.WINDOW_SERVICE);
+//		Display display = wm.getDefaultDisplay();
 
 		// if(Build.VERSION.SDK_INT>Build.VERSION_CODES.HONEYCOMB){
 		// Point size = new Point();
@@ -36,15 +37,14 @@ public class RatioActivity extends Activity {
 		// y = size.y;
 		// }
 		// else{
-		x = display.getWidth(); // deprecated
-		y = display.getHeight();
+//		x = display.getWidth(); // deprecated
+//		y = display.getHeight();
 		// }
-
-		int statusBarHeight = getStatusBarHeight();
-
-		mRatioFixer.initialize(x, y - statusBarHeight);
-
-		mRatioLayout = new RatioRelativeLayout(this);
+       if(mVWidth != 0&&mVHeight!= 0)
+    	   mRatioLayout = new RatioRelativeLayout(this,mVWidth,mVHeight);
+       else
+		   mRatioLayout = new RatioRelativeLayout(this);
+		mRatioFixer = mRatioLayout.getRatioFixer();
 		mRatioLayout.post(new Runnable() {
 
 			@Override
@@ -81,15 +81,7 @@ public class RatioActivity extends Activity {
 
 	}
 	
-	public int getStatusBarHeight() {
-		int result = 0;
-		int resourceId = getResources().getIdentifier("status_bar_height",
-				"dimen", "android");
-		if (resourceId > 0) {
-			result = getResources().getDimensionPixelSize(resourceId);
-		}
-		return result;
-	}
+
 	public RatioRelativeLayout getMainLayout() {
 		return mRatioLayout;
 	}
@@ -109,13 +101,13 @@ public class RatioActivity extends Activity {
 		return mRatioFixer;
 	}
 	
-	public void setVirtualSize(int width, int height)
-	{
-		mRatioFixer.setVirtualSize(width, height);
-	}
-	
-	public void setDefaultVirtualSize(int width,int height)
-	{
-		RatioFixer.setDefaultVirtualSize(width, height);
-	}
+//	public void setVirtualSize(int width, int height)
+//	{
+//		mRatioFixer.setVirtualSize(width, height);
+//	}
+//	
+//	public void setDefaultVirtualSize(int width,int height)
+//	{
+//		RatioFixer.setDefaultVirtualSize(width, height);
+//	}
 }
