@@ -1,4 +1,4 @@
-package wcm.ytwhyc.ratiofixer;
+package itri.u9lab.towolf.ratiofixer;
 
 import android.widget.RelativeLayout.LayoutParams;
 
