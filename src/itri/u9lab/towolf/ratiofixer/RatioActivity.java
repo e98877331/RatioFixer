@@ -1,13 +1,10 @@
 package itri.u9lab.towolf.ratiofixer;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.FrameLayout.LayoutParams;
 
 public class RatioActivity extends Activity {
@@ -108,8 +105,4 @@ public class RatioActivity extends Activity {
 		mVHeight = height;
 	}
 	
-	public void setDefaultVirtualSize(int width,int height)
-	{
-		RatioFixer.setDefaultVirtualSize(width, height);
-	}
 }

@@ -1,52 +1,47 @@
 package itri.u9lab.towolf.ratiofixer;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 public class RatioRelativeLayout extends RelativeLayout {
 
 	private Context mContext;
 	private RatioFixer mRatioFixer;
+	private RatioLayoutConfig mConfig;
 	
 	public RatioRelativeLayout(Context context)
 	{
+		this(context, RatioLayoutConfig.getDefaultConfig());
+	}
+	
+	public RatioRelativeLayout(Context context,int pWidth,int pHeight) {
+		this(context, new RatioLayoutConfig.Builder().setVirtualSize(pWidth, pHeight).build());
+	}
+
+	public RatioRelativeLayout(Context context,int pWidth,int pHeight,boolean pIsFullScreen) {
+		this(context, new RatioLayoutConfig.Builder().setVirtualSize(pWidth, pHeight).setFullScreen(pIsFullScreen).build());
+	}
+	public RatioRelativeLayout(Context context,RatioLayoutConfig config)
+	{
 		super(context);
+       
 		mContext = context;
-		WindowManager wm = (WindowManager)
-				context.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		//Point size = new Point();
-		//display.getSize(size);
-		int x =display.getWidth();
-		int y = display.getHeight();
-		mRatioFixer = new RatioFixer();
+		mConfig = config;
+		//get physic screen size
+		int x =mContext.getResources().getDisplayMetrics().widthPixels;
+		int y = mContext.getResources().getDisplayMetrics().heightPixels;
+		mRatioFixer = new RatioFixer(mConfig);
 		mRatioFixer.initialize(x, y - getStatusBarHeight());
 	}
 	
-	public RatioRelativeLayout(Context context,int width,int height) {
-		super(context);
-		// TODO Auto-generated constructor stub
-		mContext = context;
-		WindowManager wm = (WindowManager)
-				context.getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		//Point size = new Point();
-		//display.getSize(size);
-		int x =display.getWidth();
-		int y = display.getHeight();
-		mRatioFixer = new RatioFixer();
-		mRatioFixer.setVirtualSize(width, height);
-		
-		mRatioFixer.initialize(x, y - getStatusBarHeight());
-
-	}
-
 	private int getStatusBarHeight() {
+		
+		//case of full screen
+		if(mConfig.isFullScreenMode == true)
+		return 0;
+		
 		int result = 0;
 		int resourceId = getResources().getIdentifier("status_bar_height",
 				"dimen", "android");

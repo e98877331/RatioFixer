@@ -4,40 +4,32 @@ import android.widget.RelativeLayout.LayoutParams;
 
 public class RatioFixer {
 
-	static int defaultVirtualWidth =768;
-	static int defaultVirtualHeight = 1230;
 	
-	 int virtualWidth =0;
-	 int virtualHeight =0;
-	// final static int VIRTUALWIDTH =1230;
-	// final static int VIRTUALHEIGHT = 768;
-	
+	int virtualWidth;
+	int virtualHeight;
+
+	RatioLayoutConfig mConfig;
 
 	float ratio;
-
 	int realWidth;
 	int realHeight;
 
-	public RatioFixer() {
-
+	public RatioFixer(RatioLayoutConfig pConfig) {
+		mConfig = pConfig;
+		virtualWidth = mConfig.virtualWidth;
+		virtualHeight = mConfig.virtualHeight;
 	}
 
-	public  LayoutParams getLayoutParam(int width, int height, int x,
-			int y) {
-		LayoutParams rp = new LayoutParams(getRealValue(width), getRealValue(height));
+	public LayoutParams getLayoutParam(int width, int height, int x, int y) {
+		LayoutParams rp = new LayoutParams(getRealValue(width),
+				getRealValue(height));
 		rp.leftMargin = getRealValue(x);
 		rp.topMargin = getRealValue(y);
 		return rp;
 	}
 
-	public  void initialize(int pw, int ph) {
-		if(virtualWidth == 0 && virtualHeight == 0)
-		{
-			virtualWidth = defaultVirtualWidth;
-			virtualHeight = defaultVirtualHeight;
-		}
-		
-		
+	public void initialize(int pw, int ph) {
+
 		float aspect = (float) virtualHeight / virtualWidth;
 		float realRatio = (float) ph / pw;
 		// mInstance.ratio = VIRTUALHEIGHT/ VIRTUALWIDTH;
@@ -54,37 +46,26 @@ public class RatioFixer {
 			realHeight = (int) (realWidth * aspect);
 		}
 
-		ratio = (float)realWidth / virtualWidth;
+		ratio = (float) realWidth / virtualWidth;
 	}
 
-	public  float getRatio() {
+	public float getRatio() {
 		return ratio;
 	}
 
-	public  int getRealValue(int p) {
+	public int getRealValue(int p) {
 		return (int) (p * ratio);
 	}
 
-	public  void setVirtualSize(int vWidth, int vHeight) {
-		virtualWidth = vWidth;
-		virtualHeight = vHeight;
-	}
-	
 
-	public  int getRealWidth() {
+	public int getRealWidth() {
 		return realWidth;
 
 	}
 
-	public  int getRealHeight() {
+	public int getRealHeight() {
 		return realHeight;
 	}
 
 
-	public static void setDefaultVirtualSize(int vWidth,int vHeigth)
-	{
-		defaultVirtualWidth = vWidth;
-		defaultVirtualHeight = vHeigth;
-	}
-	
 }
