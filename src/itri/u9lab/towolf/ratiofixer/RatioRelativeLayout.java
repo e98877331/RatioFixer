@@ -1,15 +1,26 @@
 package itri.u9lab.towolf.ratiofixer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 public class RatioRelativeLayout extends RelativeLayout {
 
+	/*
+	 * Fields
+	 */
+	
 	private Context mContext;
 	private RatioFixer mRatioFixer;
 	private RatioLayoutConfig mConfig;
+	
+	/*
+	 * Constructors
+	 */
 	
 	public RatioRelativeLayout(Context context)
 	{
@@ -26,19 +37,50 @@ public class RatioRelativeLayout extends RelativeLayout {
 	public RatioRelativeLayout(Context context,RatioLayoutConfig config)
 	{
 		super(context);
-       
 		mContext = context;
-		mConfig = config;
+        hideActionBar();
+
+        mConfig = config;
 		//get physic screen size
 		int x =mContext.getResources().getDisplayMetrics().widthPixels;
 		int y = mContext.getResources().getDisplayMetrics().heightPixels;
 		mRatioFixer = new RatioFixer(mConfig);
 		mRatioFixer.initialize(x, y - getStatusBarHeight());
+		
+		
 	}
+	
+	/*
+	 * Override methods
+	 */
+	
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		// TODO Auto-generated method stub
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+		View rootView = this.getRootView();
+		rootView.setBackgroundColor(Color.BLACK);
+
+		setMeasuredDimension(mRatioFixer.getRealWidth(),
+				mRatioFixer.getRealHeight());
+	}
+
+	/*
+	 * private methods
+	 */
+	
+	private void hideActionBar()
+	{
+		Activity context = (Activity)mContext;
+		if(context.getActionBar()!= null)
+			context.getActionBar().hide();
+	}
+	
 	
 	private int getStatusBarHeight() {
 		
-		//case of full screen
+		//case of full screen mode
 		if(mConfig.isFullScreenMode == true)
 		return 0;
 		
@@ -50,52 +92,30 @@ public class RatioRelativeLayout extends RelativeLayout {
 		}
 		return result;
 	}
+
 	
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		// TODO Auto-generated method stub
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-		View rootView = this.getRootView();
-		rootView.setBackgroundColor(Color.BLACK);
-
-//		 int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-//		 int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-//		 RatioFixer.initialize(widthSize, heightSize - getStatusBarHeight());
-
-		// int x = RatioFixer.getRealWidth();
-		// int y = RatioFixer.getRealHeight();
-
-		setMeasuredDimension(mRatioFixer.getRealWidth(),
-				mRatioFixer.getRealHeight());
-	}
-
+	/*
+	 * public methods
+	 */
 	
 	public RatioFixer getRatioFixer()
 	{
 		return mRatioFixer;
 	}
-	// protected void onLayout (boolean changed, int left, int top, int right,
-	// int bottom) {
-	// // double factor = (right - left) / (double)_virtualWidth;
-	//
-	// int nchildren = getChildCount();
-	//
-	// for(int i = 0; i < nchildren; i++) {
-	// View child = getChildAt(i);
-	// LayoutParams lp = (LayoutParams) child.getLayoutParams();
-	// // Scale child according to given space
-	// float factor = RatioFixer.getRatio();
-	// child.layout((int)(lp.leftMargin * factor),
-	// (int)(lp.topMargin * factor),
-	// (int)((lp.leftMargin + child.getMeasuredWidth()) * factor),
-	// (int)((lp.topMargin + child.getMeasuredHeight()) * factor ));
-	// }
-	// }
 
 	
 	public void addView(View view,int width,int height,int x, int y)
 	{
 		this.addView(view , mRatioFixer.getLayoutParam(width, height, x, y));
+	}
+	
+	public void setToContentView(Activity pActivity)
+	{
+		FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+				android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+		layoutParams.gravity = Gravity.CENTER;
+		pActivity.setContentView(this,layoutParams);
+		
 	}
 }
