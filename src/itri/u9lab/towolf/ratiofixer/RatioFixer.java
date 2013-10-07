@@ -32,10 +32,7 @@ public class RatioFixer {
 
 		float aspect = (float) virtualHeight / virtualWidth;
 		float realRatio = (float) ph / pw;
-		// mInstance.ratio = VIRTUALHEIGHT/ VIRTUALWIDTH;
-		// mInstance.realWidth = pw;
-		// mInstance.realHeight = (int)(VIRTUALHEIGHT *mInstance.ratio);
-		// mInstance.realHeight = (int)(VIRTUALHEIGHT *mInstance.ratio);
+
 
 		if (realRatio < aspect) {
 			realHeight = ph;

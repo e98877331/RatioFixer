@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -38,10 +39,17 @@ public class RatioRelativeLayout extends RelativeLayout {
 	{
 		super(context);
 		mContext = context;
+		mConfig = config;
+		 
+		 
+		if(mConfig.isFullScreenMode)
+		fullScreen();
+		
+		//hide actionBar in all situation when using ratio layout
         hideActionBar();
 
-        mConfig = config;
-		//get physic screen size
+       
+		//get physic screen size and use it to initialize ratiofixer
 		int x =mContext.getResources().getDisplayMetrics().widthPixels;
 		int y = mContext.getResources().getDisplayMetrics().heightPixels;
 		mRatioFixer = new RatioFixer(mConfig);
@@ -70,6 +78,15 @@ public class RatioRelativeLayout extends RelativeLayout {
 	 * private methods
 	 */
 	
+	private void fullScreen()
+	{
+		Activity activity = (Activity)mContext;
+        WindowManager.LayoutParams attrs = activity.getWindow().getAttributes();
+        attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        activity.getWindow().setAttributes(attrs);
+	}
+	
+	
 	private void hideActionBar()
 	{
 		Activity context = (Activity)mContext;
@@ -78,10 +95,17 @@ public class RatioRelativeLayout extends RelativeLayout {
 	}
 	
 	
+	private boolean isFullScreen()
+	{
+		return (((Activity)mContext).getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
+	}
+	
 	private int getStatusBarHeight() {
 		
+		//int flags = ((Activity)mContext).getWindow().getAttributes().flags;
+		
 		//case of full screen mode
-		if(mConfig.isFullScreenMode == true)
+		if(isFullScreen() == true)
 		return 0;
 		
 		int result = 0;
@@ -98,17 +122,24 @@ public class RatioRelativeLayout extends RelativeLayout {
 	 * public methods
 	 */
 	
+	
 	public RatioFixer getRatioFixer()
 	{
 		return mRatioFixer;
 	}
 
-	
+	/*
+	 * add subview with width, height, and x,y position 
+	 */
 	public void addView(View view,int width,int height,int x, int y)
 	{
 		this.addView(view , mRatioFixer.getLayoutParam(width, height, x, y));
 	}
 	
+	
+	/*
+	 * set this RatioRelativeLayout as target activity's content view
+	 */
 	public void setToContentView(Activity pActivity)
 	{
 		FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(

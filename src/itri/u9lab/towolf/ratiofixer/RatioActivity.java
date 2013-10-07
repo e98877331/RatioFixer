@@ -22,21 +22,7 @@ public class RatioActivity extends Activity {
 		this.getActionBar().hide();
 		onInitialize();
 		
-//		int x, y;
-//		WindowManager wm = (WindowManager) this
-//				.getSystemService(Context.WINDOW_SERVICE);
-//		Display display = wm.getDefaultDisplay();
 
-		// if(Build.VERSION.SDK_INT>Build.VERSION_CODES.HONEYCOMB){
-		// Point size = new Point();
-		// display.getSize(size);
-		// x = size.x;
-		// y = size.y;
-		// }
-		// else{
-//		x = display.getWidth(); // deprecated
-//		y = display.getHeight();
-		// }
        if(mVWidth != 0&&mVHeight!= 0)
     	   mRatioLayout = new RatioRelativeLayout(this,mVWidth,mVHeight);
        else
