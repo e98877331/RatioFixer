@@ -1,107 +1,83 @@
 RatioFixer
 ==========
 
-An extended Activity class for Android which we can specify exact locations (x/y coordinates) according to our own defined virtual size, then scale to any screen size by ratio automatically.
+This project aims to provide a absolute layout like compolent but user can specify max virtual width and height,
 
+than it will automatically scaling to fit physical screen size with same aspect ratio once being set as content view.
 
-This project is supported by Industrial Technology Research Institute Big Data Center A100 Team of Taiwan.
+Basic Usage:
 
-You have two ways to use RatioRelativeLayout,
-
-Firstly, use RatioAcitivty:
-
-    public class TestActivity extends RatioActivity {
-    //two button for demo
-    Button btn1;
-    Button btn2;
-        /*optional function, you can set virtual size here. default size:   
-         int VIRTUALWIDTH = 768;
-	 int VIRTUALHEIGHT = 1230;
-        */
-	@Override
-	public void onInitialize() {
-		// TODO Auto-generated method stub
-		super.onInitialize();
-                  
-                /* This line will set default virtual size for all ratio activity.
-                 * make sure always invoke this function in onInitialize()
-                 */
-		setDefaultVirtualSize(1280,718);
-                /* This line will set individual virtual size for this ratio activity.
-                 * Ignore default virtual size if set;
-                 * make sure always invoke this function in onInitialize()
-                 */
-                setVirtualSize(1280,718);
-	}
-	
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-	   btn1 = new Button(this);
-	   btn2 = new Button(this);
-	   addView(btn1, 1280, 200, 0, 0);
-	   addView(btn2, 640, 100, 615, 200);
-	}
-    }
+
+		RatioRelativeLayout mView = new RatioRelativeLayout(this);
+		mView.setBackgroundColor(Color.WHITE);
+		
+		Button bt1 = new Button(this);
+		
+		//add bt1 to mView at (0,0) with width = 200 and height = 300
+		mView.addView(bt1, 200, 300, 0, 0);
+		
+		TextView tv1 = new TextView(this);
+		tv1.setText("Hello World");
+		tv1.setBackgroundColor(Color.CYAN);
+		
+		//add tv1 to mView at (300,400) with wrap_content width and height
+		mView.addView(tv1, RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT, 300, 400);
+		
+		mView.setToContentView(this);
+
+ 	}
+
+this will make the follow layout on all devices:
 
 
-Or secondary, use RatioRelativeLayout directly:
+You can also use the following RatioRelativeLayout contructor to specify virtual size:
 
-    public class RatioRelativeLayoutTest extends Activity{
-	Button btn1,btn2;
-	RatioRelativeLayout mainLayout;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		
-		//setting total units of width and height you want
-		mainLayout = new RatioRelativeLayout(this,500,500);
-		
-		//or use default size which is defined as width * height = 768 *1230
-		//mainLayout = new RatioRelativeLayout(this);
-		
-		mainLayout.setBackgroundColor(Color.WHITE);
+	RatioRelativeLayout(context,width,heigth);
+
+or configure the activity it attaches to use full screen mode or not in boolean:
+
+	RatioRelativeLayout(context,width,heigth,useFullScreen);
+
+
+RatioFixer:
+
+RatioFixer is a class that maintains relationship between virtual size and physical size for each RatioRelativeLayout.
+
+You can obtain RatioFixer by using getRatioFixer() method of RatioRelativeLayout, then use getRatio() method to get value of (physical size)/(virtual size)
+
+Alternatively, you can directly use getRealValue(virtual width/height) to get real pixel length on screen by given virtual width/heigth. 
+
+RatioFixer operations may be useful in some circumstances such like add padding or set text size,
+
+because these methods in Android sdk are not under control of RatioRelativeLayout and use pixel as parameter unit instead of our own defined virtual size.
+
+As the consquence, we have to translate virtual size which we'd like to use to real pixel length manually.
+
+for example:
+
+	RatioRelativeLayout mainLayout = new RatioRelativeLayout(this);
+	RatioFixer rf = mainLayout.getRatioFixer(); 
 	
-		LayoutParams layoutParams = new LayoutParams(
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-				android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-		layoutParams.gravity = Gravity.CENTER;
-		setContentView(mainLayout,layoutParams);
-		
-		btn1 = new Button(this);
-		mainLayout.addView(btn1,500,250,0,0);
-		
-		btn2 = new Button(this);
-	        mainLayout.addView(btn2,250,100,0,250);
-		
-	}
-
-    }
-
-
+	btn1.setPadding(rf.getRealValue(5), rf.getRealValue(5), 0, 0);
 
 
 
 Note:
 
-0. Always remember that everything add to screen by using addView(View view,int width,int height,int x, int y) method have been calculated to real dimension for each device before drawing. 
-1. this.getActionBar().hide() will called in RationAcitity in default setting. 
-2. If you have two Activity for both portrait and landscape, remember to set different Virtual size;
+0. Everything add to layout by using addView(View view,int width,int height,int x, int y) method will be calculated to real pixel size according to different devices. 
 
-3. Use Acticity.this.getRealValue() to translate virtual values to real size. This may be useful when doing something like add padding or set text size. for example
-    
-    btn1.setPadding(getRealValue(5), getRealValue(5), 0, 0);
+1. Action bar always be hidden by RatioRelativeLayout. 
 
-4. Default virtual size is 
+2. Default virtual size for acitivitys with status bar is 
 
     int VIRTUALWIDTH = 768;
     int VIRTUALHEIGHT = 1230;
 
-which in my opinion is the best value for nowaday devices in portrait mode with status bar. And
-
+    without status bar is 
+   
+    int VIRTUALWIDTH = 768;
     int VIRTUALHEIGHT = 1280;
 
-without status bar;
+
