@@ -31,7 +31,7 @@ Basic Usage:
 
 this will make the follow layout on all devices:
 
-![Alt text](./imageForReadme/img1.png "example1")
+![Alt text](./imageForReadme/showcase.jpg "example1")
 
 
 You can also use the following RatioRelativeLayout contructor to specify virtual size:
