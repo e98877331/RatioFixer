@@ -1,11 +1,31 @@
 RatioFixer
 ==========
 
-This project aims to provide a absolute layout like compolent but user can specify max virtual width and height,
+This project aims to provide a absolute layout like component but user can specify max virtual width and height,
 
-than it will automatically scaling to fit physical screen size with same aspect ratio once being set as content view.
+than it will automatically scaling to fit physical screen size with the same aspect ratio once being set to content view of activities.
 
-Basic Usage:
+#Showcase:
+The following apps are made with RatioFixer. They will look identical on all android devices, no metter what screen size.
+
+![Alt text](./imageForReadme/showcase.jpg "example1")
+
+From left to right:
+
+###[Surround](https://play.google.com/store/apps/details?id=itri.u9.surround)
+An app for The Designer Week Event 2013 in Taiwan, helps you to explore the surrounding store by solving simple missions.
+
+###[Dragon Gate Inn](https://play.google.com/store/apps/details?id=itri.u9.dragongateinn)
+An app for Dragon Gate Inn tv program in taiwan, use audio recognize technique to checkin while watching tv show.
+
+###[Canvas.Net](https://play.google.com/store/apps/details?id=ntu.csie.wcmlab.canvasnetfree)
+This application is used for Synchronized Canvas. By using this, You can not only draw yourself, 
+but also draw with your friend together. In this application, it has many functionality, 
+such as "pick color to draw, with a parameter of transparency", "use eraser", "undo/redo", "clear the page", 
+"save/load the image into/from SD card" and etc. It will be the best entertainment application for 
+you and your friends during the boring time!!!
+
+#Basic Usage:
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,8 +51,7 @@ Basic Usage:
 
 this will make the follow layout on all devices:
 
-![Alt text](./imageForReadme/showcase.jpg "example1")
-
+<img src="./imageForReadme/img1.png"  width=50%>
 
 You can also use the following RatioRelativeLayout contructor to specify virtual size:
 
@@ -43,7 +62,7 @@ or configure the activity it attaches to use full screen mode or not in boolean:
 	RatioRelativeLayout(context,width,heigth,useFullScreen);
 
 
-RatioFixer:
+###RatioFixer:
 
 RatioFixer is a class that maintains relationship between virtual size and physical size for each RatioRelativeLayout.
 
@@ -51,7 +70,7 @@ You can obtain RatioFixer by using getRatioFixer() method of RatioRelativeLayout
 
 Alternatively, you can directly use getRealValue(virtual width/height) to get real pixel length on screen by given virtual width/heigth. 
 
-RatioFixer operations may be useful in some circumstances such like add padding or set text size,
+Operating RatioFixer may be useful in some circumstances such like add padding or set text size,
 
 because these methods in Android sdk are not under control of RatioRelativeLayout and use pixel as parameter unit instead of our own defined virtual size.
 
@@ -66,7 +85,7 @@ for example:
 
 
 
-Note:
+#Note:
 
 0. Everything add to layout by using addView(View view,int width,int height,int x, int y) method will be calculated to real pixel size according to different devices. 
 
