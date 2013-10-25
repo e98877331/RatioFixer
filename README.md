@@ -101,4 +101,6 @@ for example:
     int VIRTUALWIDTH = 768;
     int VIRTUALHEIGHT = 1280;
 
-
+#LICENSE
+Copyright 2013 U9Lab,Industrial Technology Research Institute. <br />
+Licensed under the Apache License, Version 2.0
