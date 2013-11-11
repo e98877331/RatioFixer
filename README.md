@@ -100,7 +100,19 @@ for example:
    
     int VIRTUALWIDTH = 768;
     int VIRTUALHEIGHT = 1280;
+    
+#Some problems you may faced when using RatioFixer
 
+0. When use EditText component, RatioRelativeLayout may being wrong measured after the Ime(input method) keyboard raised.
+   the situation will cause RatioRelativeLayout layout broken. you can set following configure in the acitivty to fix the
+   problem.
+
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+1. You can you followint statement to make text size identical on all devices.
+
+		mTestBtn.setTextSize(TypedValue.COMPLEX_UNIT_PX,getRatioFixer().getRealValue(60));
+	
 #LICENSE
 Copyright 2013 U9Lab,Industrial Technology Research Institute. <br />
 Licensed under the Apache License, Version 2.0
