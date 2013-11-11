@@ -101,7 +101,7 @@ for example:
     int VIRTUALWIDTH = 768;
     int VIRTUALHEIGHT = 1280;
     
-#Some problems you may faced when using RatioFixer
+#Some useful tips when using RatioFixer
 
 0. When use EditText component, RatioRelativeLayout may being wrong measured after the Ime(input method) keyboard raised.
    the situation will cause RatioRelativeLayout layout broken. you can set following configure in the acitivty to fix the
