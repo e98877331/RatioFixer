@@ -36,8 +36,8 @@ public class RatioFixer {
 	}
 
 	public LayoutParams getLayoutParam(int width, int height, int x, int y) {
-		LayoutParams rp = new LayoutParams(getRealValue(width),
-				getRealValue(height));
+		LayoutParams rp = new LayoutParams(width<0?width:getRealValue(width),
+				height<0?height:getRealValue(height));
 		rp.leftMargin = getRealValue(x);
 		rp.topMargin = getRealValue(y);
 		return rp;
