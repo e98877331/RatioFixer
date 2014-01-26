@@ -16,14 +16,19 @@
 
 package itri.u9lab.towolf.ratiofixer;
 
+import android.util.Log;
 import android.widget.RelativeLayout.LayoutParams;
 
 public class RatioFixer {
 
+	private static String TAG = "RatioFixer";
+	
+	static RatioFixer mGlobalInstance = null;
+	
 	int virtualWidth;
 	int virtualHeight;
 
-	RatioLayoutConfig mConfig;
+	final RatioLayoutConfig mConfig;
 
 	float ratio;
 	int realWidth;
@@ -72,7 +77,7 @@ public class RatioFixer {
 	 */
 
 	public int getRealValue(int p) {
-		return (int) (p * ratio);
+		return Math.round(p * ratio);
 	}
 
 	/**
@@ -94,5 +99,33 @@ public class RatioFixer {
 	public int getRealHeight() {
 		return realHeight;
 	}
+	
+	/**
+	 * Get RatioFixerConfig
+	 * 
+	 * @return
+	 */
+	
+	public final RatioLayoutConfig getConfig()
+	{
+		return mConfig;
+	}
+	
+	
+	public RatioFixer getGlobalRatioFixer()
+	{
+		if(mGlobalInstance == null)
+			Log.e(TAG, "mGlobalInstance not set yet");
+		return mGlobalInstance;
+	}
+	
+	
+	public void setGlobalRatioFixer(RatioFixer pRF)
+	{
+		mGlobalInstance = pRF;
+	}
+	
+	
+	
 
 }

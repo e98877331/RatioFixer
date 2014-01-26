@@ -32,7 +32,6 @@ public class RatioRelativeLayout extends RelativeLayout {
 
 	private Context mContext;
 	private RatioFixer mRatioFixer;
-	private RatioLayoutConfig mConfig;
 
 	/*
 	 * Constructors
@@ -77,6 +76,26 @@ public class RatioRelativeLayout extends RelativeLayout {
 				.build());
 	}
 
+	
+	/**
+	 * Constructor with RatioFixer.
+	 * @param context
+	 * @param rf
+	 */
+	
+	public RatioRelativeLayout(Context context,RatioFixer rf)
+	{
+		super(context);
+		mContext =context;
+		mRatioFixer = rf;
+	    if(rf.getConfig().isFullScreenMode)
+	    	fullScreen();
+	    
+	    hideActionBar();
+		
+ 	}
+	
+	
 	/**
 	 * Constructor which you can use your own configuration.
 	 * 
@@ -86,9 +105,9 @@ public class RatioRelativeLayout extends RelativeLayout {
 	public RatioRelativeLayout(Context context, RatioLayoutConfig config) {
 		super(context);
 		mContext = context;
-		mConfig = config;
+		
 
-		if (mConfig.isFullScreenMode)
+		if (config.isFullScreenMode)
 			fullScreen();
 
 		// hide actionBar in all situation when using ratio layout
@@ -97,7 +116,7 @@ public class RatioRelativeLayout extends RelativeLayout {
 		// get physic screen size and use it to initialize ratiofixer
 		int x = mContext.getResources().getDisplayMetrics().widthPixels;
 		int y = mContext.getResources().getDisplayMetrics().heightPixels;
-		mRatioFixer = new RatioFixer(mConfig);
+		mRatioFixer = new RatioFixer(config);
 		mRatioFixer.initialize(x, y - getStatusBarHeight());
 
 	}
@@ -181,6 +200,26 @@ public class RatioRelativeLayout extends RelativeLayout {
 	public void addView(View view, int width, int height, int x, int y) {
 		this.addView(view, mRatioFixer.getLayoutParam(width, height, x, y));
 	}
+	
+
+	/**
+	 * add subview with width, height, and x,y position in percentage. value should between 0 ~ 1
+	 * 
+	 * @param view
+	 * @param width
+	 * @param height
+	 * @param x
+	 * @param y
+	 */
+	
+	public void addViewPercentage(View view,float width,float height, float x,float y)
+	{
+		int rh = mRatioFixer.virtualHeight;
+		int rw = mRatioFixer.virtualWidth;
+		
+		addView(view, Math.round(width*rw), Math.round(height*rh), Math.round(x*rw),Math.round(y*rh));
+	}
+	
 
 	/**
 	 * Set this RatioRelativeLayout as target activity's content view in center
