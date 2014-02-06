@@ -112,7 +112,7 @@ public class RatioFixer {
 	}
 	
 	
-	public RatioFixer getGlobalRatioFixer()
+	public static RatioFixer getGlobalRatioFixer()
 	{
 		if(mGlobalInstance == null)
 			Log.e(TAG, "mGlobalInstance not set yet");
@@ -120,7 +120,7 @@ public class RatioFixer {
 	}
 	
 	
-	public void setGlobalRatioFixer(RatioFixer pRF)
+	public static void setGlobalRatioFixer(RatioFixer pRF)
 	{
 		mGlobalInstance = pRF;
 	}
