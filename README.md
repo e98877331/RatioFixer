@@ -1,12 +1,10 @@
 RatioFixer
 ==========
 
-This project aims to provide a absolute layout like component but user can specify max virtual width and height,
-
-than it will automatically scaling to fit physical screen size with the same aspect ratio once being set to content view of activities.
+By using this library, developer can use absolute position which based on virtual coordinate to specify UI position. 
 
 #Showcase:
-The following apps are made with RatioFixer. They will look identical on all android devices, no metter what screen size.
+The following apps are made with RatioFixer. They will look identical on all android devices, for any screen size.
 
 ![Alt text](./imageForReadme/showcase.jpg "example1")
 
